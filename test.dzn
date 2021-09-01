@@ -5,10 +5,10 @@ agents = {a1, a2};
 sources = [x, v];
 targets = [v, y];
 
-paths = [|x, u, v, d
-         |v, u, y, d|];
+paths = [|x, u, v
+         |v, u, y|];
 
-longestPath = 4;
+longestPath = 3;
 
-dist = [|1, 1, 1, 0
-        |1, 1, 1, 0|];
+dist = [|1, 1, 1
+        |1, 1, 1|];

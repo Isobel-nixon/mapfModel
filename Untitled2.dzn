@@ -5,11 +5,11 @@ agents = {a1, a2};
 sources = [u, v];
 targets = [w, z];
 
-paths = [|u, x, w, d, d
-         |v, w, x, z, d|];
+paths = [|u, x, w, d
+         |v, w, x, z|];
          
 
-longestPath = 5;
+longestPath = 4;
 
-dist = [|3, 2, 1, 0, 0
-        |4, 3, 2, 1, 0|];
+dist = [|3, 2, 1, 0
+        |4, 3, 2, 1|];

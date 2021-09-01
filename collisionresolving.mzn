@@ -51,14 +51,12 @@ constraint forall(l in location where l != dummy, a, b in sharedLocations[l] whe
 
 % check for edge collisions
 
-constraint forall(l, m in location where l != dummy 
-                                        /\ m != dummy, 
+constraint forall(l, m in location where l != dummy /\ m != dummy, 
                   a, b in (sharedLocations[l] intersect sharedLocations[m]))
                   (
-                  forall(i, j in 2..longestPath 
-                          where paths[a, i] = l /\ paths[a, i - 1] = m /\ paths[b, j] = m /\ paths[b, j -1] = l)
+                  forall(i, j in 2..longestPath where paths[a, i] = l /\ paths[a, i - 1] = m /\ paths[b, j] = m /\ paths[b, j -1] = l)
                    (
-                  departure[a, i] <= arrival[b, j-1] \/ departure[b, j] <= arrival[a, i - 1]    
+                          departure[a, i] <= arrival[b, j-1] \/ departure[b, j] <= arrival[a, i - 1]    
                    ));
 
 % calculate sum of costs
@@ -67,5 +65,6 @@ constraint planlen = [arrival[a, longestPath] | a in agents];
 
 var 0..time: sumofcosts;
 
+constraint sumofcosts = sum(planlen);
 
-solve minimize sumofcosts = sum(planlen);
+solve minimize sumofcosts;
