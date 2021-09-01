@@ -1,0 +1,15 @@
+% this test will have a edge conflict b/w w and x which is resolved by a1 waiting 1 time step
+location = {v, u, w, x, y, z, d};
+dummy = d;
+agents = {a1, a2};
+sources = [u, v];
+targets = [w, z];
+
+paths = [|u, x, w, d, d
+         |v, w, x, z, d|];
+         
+
+longestPath = 5;
+
+dist = [|3, 2, 1, 0, 0
+        |4, 3, 2, 1, 0|];

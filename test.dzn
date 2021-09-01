@@ -1,0 +1,14 @@
+% this test will have a vertex conflict at vertex u, which is resolved by a1 waiting 1 time step
+location = {v, u, w, x, y, z, d};
+dummy = d;
+agents = {a1, a2};
+sources = [x, v];
+targets = [v, y];
+
+paths = [|x, u, v, d
+         |v, u, y, d|];
+
+longestPath = 4;
+
+dist = [|1, 1, 1, 0
+        |1, 1, 1, 0|];
