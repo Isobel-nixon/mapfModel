@@ -13,7 +13,7 @@ int: time = sum(dist);
 
 array[agents, 1..longestPath] of var 0..time: arrival;  % time which agent arrives at loc of ith location
 array[agents, 1..longestPath] of var 0..time: departure;
-array[agents] of var 1..time: planlen;
+array[agents] of var 0..time: planlen;
 
 array[location] of set of agents: sharedLocations = [{a | i in 1..longestPath, a in agents where paths[a, i] = l} | l in location];
 
@@ -35,7 +35,7 @@ constraint forall(a in agents, i in 1..longestPath -1 where paths[a, i] != dummy
            paths[a, i] != targets[a] /\ paths[a, i] != dummy-> departure[a, i] = arrival[a, i + 1]
 );                
 
-% set departure time for target/dummy to maxTime
+% set departure time for target/dummy to maxTime since we never actually depart from goal/dummy
 constraint forall(a in agents, i in 1..longestPath)(
            paths[a, i] = targets[a] \/ paths[a, i] = dummy ->
            departure[a, i] = time
@@ -52,8 +52,7 @@ constraint forall(l in location where l != dummy, a, b in sharedLocations[l] whe
 % check for edge collisions
 
 constraint forall(l, m in location where l != dummy 
-                                        /\ m != dummy 
-                                        /\ l < m, 
+                                        /\ m != dummy, 
                   a, b in (sharedLocations[l] intersect sharedLocations[m]))
                   (
                   forall(i, j in 2..longestPath 
@@ -66,8 +65,7 @@ constraint forall(l, m in location where l != dummy
 
 constraint planlen = [arrival[a, longestPath] | a in agents];
 
-var int: sumofcosts;
+var 0..time: sumofcosts;
 
-constraint sumofcosts = sum(planlen);
 
-solve minimize sumofcosts;
+solve minimize sumofcosts = sum(planlen);
