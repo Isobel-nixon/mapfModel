@@ -80,6 +80,9 @@ constraint forall(l in location where l!= dummy, a, b in sharedLocations[l] wher
 constraint forall(s in 1..numEdgeSwaps)(
                 (fdep[agentSwaps[1, s], locationSwaps[1, s]] < farr[agentSwaps[2, s], locationSwaps[1, s]]
                 \/ fdep[agentSwaps[2, s], locationSwaps[2, s]] < farr[agentSwaps[1, s], locationSwaps[2, s]])
+                /\
+                (fdep[agentSwaps[1, s], locationSwaps[2, s]] < farr[agentSwaps[2, s], locationSwaps[2, s]]
+                \/ fdep[agentSwaps[2, s], locationSwaps[1, s]] < farr[agentSwaps[1, s], locationSwaps[1, s]])
                 );
 
 % calculate sum of costs
@@ -90,7 +93,7 @@ var 0..time*card(agents): sumofcosts;
 
 constraint sumofcosts = sum(planlen);
 
-solve minimize sumofcosts;
-
+% solve minimize sumofcosts;
+% solve satisfy;
 
 output [if i == 1 then "Agent \(agents[a]): " else "" endif++ "\(arrival[a, i]): \(paths[a,i])" ++ if paths[a, i] = targets[a] then "\n" else ", " endif| a in agents, i in 1..longestPath where paths[a, i] != dummy] ++ ["\nCost of plan = ", show(sumofcosts)];
