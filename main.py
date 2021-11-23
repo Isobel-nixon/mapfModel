@@ -72,7 +72,7 @@ def get_times_percent(data):
 def get_corridor(data):
     cor_len = []
     for line in data:
-        cor_len.append(int(line[14]))
+        cor_len.append(int(line[18]))
     return cor_len
 
 
